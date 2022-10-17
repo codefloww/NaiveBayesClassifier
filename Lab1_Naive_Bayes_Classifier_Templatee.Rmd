@@ -12,7 +12,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Lab Assignment 1: Naive Bayes Classifier
 
-### *Name1 Surname1, Name2 Surname2, Name3 Surname3*
+### Pavlo Kryven, Baranovska Tetiana, Hrodzytska Anita
 
 ## Introduction
 
@@ -102,9 +102,9 @@ library(ggplot2)
 
 -   shortly summarize your work
 
--   do not forget to submit both the (compiled) Rmd source file and the .html
-    output
-    
+-   do not forget to submit both the (compiled) Rmd source file and the
+    .html output
+
 ### Data pre-processing
 
 -   Read the *.csv* data files.
@@ -151,9 +151,10 @@ test <-  read.csv(file = test_path, stringsAsFactors = FALSE)
 # note the power functional features of R bring us! 
 tidy_text <- unnest_tokens(train, 'splitted', 'tweet', token="words")
 tidy_text <- tidy_text %>% filter(!splitted %in% splitted_stop_words)
-tidy_text[!duplicated(tidy_text$X), ]
+#tidy_text[!duplicated(tidy_text$X), ]
 
 ```
+
 ```{r}
 X_test <- train[1:5,4]
 y_test <- train[1:5,3]
@@ -166,6 +167,7 @@ Each time you work with some data, you need to understand it before you
 start processing it. R has very powerful tools to make nice plots and
 visualization. Show what are the most common words for negative and
 positive examples as a histogram, word cloud etc. Be creative!
+
 ```{r}
 ggplot(head(tidy_text %>% count(splitted, sort = TRUE), 20)) +
   geom_point(aes(x = splitted , y = n),
@@ -289,10 +291,12 @@ model$fit(tidy_text)
 ```
 
 ## Measure effectiveness of your classifier
+
 -   Note that accuracy is not always a good metric for your classifier.
     Look at precision and recall curves, F1 score metric.
 -   Visualize them.
 -   Show failure cases.
+
 ```{r}
 model$predict("Hello, world")
 model$score(X_test, y_test)
@@ -308,8 +312,33 @@ below.
 -   List pros and cons of the method. This should include the
     limitations of your method, all the assumption you make about the
     nature of your data etc.
-    
-    
-In conclusion we can say that such classifier can be very powerful tool for specific datasets. Why specific? Because as was examined throughout the writing of this lab work, the quality of data was prooved to be very important. For instance, in given dataset was much more neutral entries, than discriminatic, which at first glance shouldn't be a problem. But as was seen in the probabilistic distributions, even with using Laplace smoothing words for the discriminating class were evaluated differently to those in neutral class. Also there was a big issues with the different kinds of stop words and mistakes in words coding. Those could be addressed applying lemmatization of words. Overal performance of model for user input is quite good, and can consistently show accurate classes.
 
-The biggest limitation for us came with the explicit use of R language, that don't provide such vectorazation possibilities as C or C++. This is the main reason of such slow work of classification. Talking about Naive Bayes model, it performed well better than was expected. Because of the Bayes theorem which account number of entries for each class, it still managed to get quite good aproximation besides such uneven training dataset. Also this model is really basic to implement, unlike some other classification models which use complex methods. Because of our strong assumption of independence of words within tweets, we achived some pros and cons for our model. It obviously became more simple and straightforward to calculate general conditional probability for feature. However, such assumption lead us to losing some accuracy, as we know, that words and their order, matter. In general, it makes sense to watch at words that was used, and based on how frequently they are used in neutral or discriminatory cases, make assumption about given sentence.
+In conclusion we can say that such classifier can be very powerful tool
+for specific datasets. Why specific? Because as was examined throughout
+the writing of this lab work, the quality of data was prooved to be very
+important. For instance, in given dataset was much more neutral entries,
+than discriminatic, which at first glance shouldn't be a problem. But as
+was seen in the probabilistic distributions, even with using Laplace
+smoothing words for the discriminating class were evaluated differently
+to those in neutral class. Also there was a big issues with the
+different kinds of stop words and mistakes in words coding. Those could
+be addressed applying lemmatization of words. Overal performance of
+model for user input is quite good, and can consistently show accurate
+classes.
+
+The biggest limitation for us came with the explicit use of R language,
+that don't provide such vectorazation possibilities as C or C++. This is
+the main reason of such slow work of classification. Talking about Naive
+Bayes model, it performed well better than was expected. Because of the
+Bayes theorem which account number of entries for each class, it still
+managed to get quite good aproximation besides such uneven training
+dataset. Also this model is really basic to implement, unlike some other
+classification models which use complex methods. Because of our strong
+assumption of independence of words within tweets, we achived some pros
+and cons for our model. It obviously became more simple and
+straightforward to calculate general conditional probability for
+feature. However, such assumption lead us to losing some accuracy, as we
+know, that words and their order, matter. In general, it makes sense to
+watch at words that was used, and based on how frequently they are used
+in neutral or discriminatory cases, make assumption about given
+sentence.
