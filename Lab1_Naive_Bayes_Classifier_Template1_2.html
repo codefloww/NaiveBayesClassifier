@@ -450,7 +450,6 @@ library(dplyr)</code></pre>
 <ul>
 <li><p>The first step is data pre-processing, which includes removing
 punctuation marks and stop words</p></li>
-<li><p>represent each message as a bag-of-words</p></li>
 <li><p>using the training set, calculate all the conditional
 probabilities in formula (1)</p></li>
 <li><p>use those to predict classes for messages in the test
@@ -486,19 +485,16 @@ from your text document.</li>
 </ul></li>
 </ul>
 <pre class="r"><code>list.files(getwd())</code></pre>
-<pre><code>##  [1] &quot;0-authors&quot;                                       
-##  [2] &quot;1-discrimination&quot;                                
-##  [3] &quot;2-fake_news&quot;                                     
-##  [4] &quot;3-sentiment&quot;                                     
-##  [5] &quot;4-spam&quot;                                          
-##  [6] &quot;intro-R.Rmd&quot;                                     
-##  [7] &quot;Lab1_Naive_Bayes_Classifier_Template1_2.Rmd&quot;     
-##  [8] &quot;Lab1_Naive_Bayes_Classifier_Templatee (copy).Rmd&quot;
-##  [9] &quot;Lab1_Naive_Bayes_Classifier_Templatee.html&quot;      
-## [10] &quot;Lab1_Naive_Bayes_Classifier_Templatee.ipynb&quot;     
-## [11] &quot;Lab1_Naive_Bayes_Classifier_Templatee.Rmd&quot;       
-## [12] &quot;LICENSE&quot;                                         
-## [13] &quot;stop_words.txt&quot;</code></pre>
+<pre><code>##  [1] &quot;0-authors&quot;                                   
+##  [2] &quot;1-discrimination&quot;                            
+##  [3] &quot;2-fake_news&quot;                                 
+##  [4] &quot;3-sentiment&quot;                                 
+##  [5] &quot;4-spam&quot;                                      
+##  [6] &quot;intro-R.Rmd&quot;                                 
+##  [7] &quot;Lab1_Naive_Bayes_Classifier_Template1_2.html&quot;
+##  [8] &quot;Lab1_Naive_Bayes_Classifier_Template1_2.Rmd&quot; 
+##  [9] &quot;LICENSE&quot;                                     
+## [10] &quot;stop_words.txt&quot;</code></pre>
 <pre class="r"><code>list.files(&quot;1-discrimination&quot;)</code></pre>
 <pre><code>## [1] &quot;test.csv&quot;  &quot;train.csv&quot;</code></pre>
 <pre class="r"><code>test_path &lt;- &quot;1-discrimination/test.csv&quot;
@@ -513,8 +509,8 @@ test &lt;-  read.csv(file = test_path, stringsAsFactors = FALSE)</code></pre>
 <pre class="r"><code># note the power functional features of R bring us! 
 tidy_text &lt;- unnest_tokens(train, &#39;splitted&#39;, &#39;tweet&#39;, token = &quot;words&quot;)
 tidy_text &lt;- tidy_text %&gt;% filter(!splitted %in% splitted_stop_words)</code></pre>
-<pre class="r"><code>X_test &lt;- test[1:10,4]
-y_test &lt;- test[1:10,3]</code></pre>
+<pre class="r"><code>X_test &lt;- test[1:20,4]
+y_test &lt;- test[1:20,3]</code></pre>
 </div>
 <div id="data-visualization" class="section level3">
 <h3>Data visualization</h3>
@@ -669,7 +665,7 @@ Look at precision and recall curves, F1 score metric.</li>
 <pre class="r"><code>model$predict(&quot;Hello, world&quot;)</code></pre>
 <pre><code>## [1] &quot;neutral&quot;</code></pre>
 <pre class="r"><code>model$score(X_test, y_test)</code></pre>
-<pre><code>## # A tibble: 10 × 4
+<pre><code>## # A tibble: 20 × 4
 ## # Rowwise: 
 ##    tweets                                                    y_hat y     succe…¹
 ##    &lt;chr&gt;                                                     &lt;chr&gt; &lt;chr&gt;   &lt;dbl&gt;
@@ -683,8 +679,18 @@ Look at precision and recall curves, F1 score metric.</li>
 ##  8 &quot;@user #gtfoh if itz not  #crackalogic to malign a black… disc… disc…       1
 ##  9 &quot;initiating another #work week with #positive #vibes   #… neut… neut…       1
 ## 10 &quot;first conce for an extremely excited 9 year old @user #… neut… neut…       1
+## 11 &quot;good times at band rehearsal tonight - we&#39;re ready to r… neut… neut…       1
+## 12 &quot; @user school why u do dis? :( #school #ugh #why #no   … disc… neut…       0
+## 13 &quot;21 days thank herbalife for the shakes #herballife   #s… neut… neut…       1
+## 14 &quot;knuckles   #scared #cry #dark #knuckles (old) &quot;          neut… neut…       1
+## 15 &quot;i&#39;m about to be in one of the most beautiful places wit… neut… neut…       1
+## 16 &quot;@user then why are you  &quot;                                neut… neut…       1
+## 17 &quot;be   feel #good about yourself try our #counselingwithd… neut… neut…       1
+## 18 &quot;\&quot;you can&#39;t spray a good perfume without getting a litt… neut… neut…       1
+## 19 &quot;#zaynmalik   bull up: you will dominate your bull and y… neut… neut…       1
+## 20 &quot;sumvah..kagak bisa move-on gara2 nonton clannad after s… disc… neut…       0
 ## # … with abbreviated variable name ¹​successful</code></pre>
-<pre><code>## [1] 1</code></pre>
+<pre><code>## [1] 0.9</code></pre>
 </div>
 <div id="conclusions" class="section level2">
 <h2>Conclusions</h2>
@@ -700,31 +706,31 @@ of your data etc.</li>
 <p>In conclusion, we can say that such classifier can be a very powerful
 tool for specific datasets. Why specific? Because as was examined
 throughout the writing of this lab work, the quality of data was proved
-to be very important. For instance, in the given dataset were many more
-neutral entries than discriminating ones, which shouldn’t be a problem
-at first glance. But as seen in the probabilistic distributions, even
+to be very important. For instance, in the given dataset were much more
+neutral entries than discriminational, which shouldn’t be a problem at
+first glance. But as was seen in the probabilistic distributions, even
 using Laplace smoothing words for the discriminating class were
 evaluated differently to those in the neutral class. Also, there was a
-big issue with the different kinds of stop words and mistakes in word
-coding. Those could be addressed by applying the lemmatization of words.
-The overall performance of the model for user input is quite good and
-can consistently show accurate classes.</p>
+huge issue with the different kinds of stop words and mistakes in word
+encoding. Those could be addressed by cleaning up dataset and applying
+the lemmantization of words. The overall performance of the model for
+user input is quite good and can consistently show accurate classes.</p>
 <p>The most significant limitation for us came with the explicit use of
 R language, which doesn’t provide such vectorization possibilities as C
-or C++. This is the main reason for such slow work of classification.
-Talking about the Naive Bayes model, it performed better than expected.
-Because of the Bayes theorem, which accounts a number of entries for
-each class, it still managed to get a pretty good approximation besides
-such an uneven training dataset. Also, this model is basic to implement,
-unlike some other classification models that use complex methods.
-Because of our strong assumption of independence of words within tweets,
-we achieved some pros and cons for our model. It obviously became more
-simple and straightforward to calculate the general conditional
-probability for the feature. However, such an assumption lead us to
-loosing some accuracy, as we know that words and their order matter. In
-general, it makes sense to look at words used and make assumptions about
-a given sentence based on how frequently they are used in neutral or
-discriminatory cases.</p>
+or C++ based solutions in python for example. This is the main reason
+for such slow evaluation of the model. Talking about the Naive Bayes
+model, it performed better than expected. Because of the Bayes theorem,
+which accounts a number of entries for each class, it still managed to
+get a pretty good approximation besides such an uneven training dataset.
+Also, this model is basic to implement, unlike some other classification
+models that use complex methods. Because of our strong assumption of
+independence of words within tweets, we achieved some pros and cons for
+our model. It obviously became more simple and straightforward to
+calculate the general conditional probability for the feature. However,
+such an assumption lead us to loosing some accuracy, as we know that
+words and their order matter. In general, it makes sense to look at
+words used and make assumptions about a given sentence based on how
+frequently they are used in neutral or discriminatory cases.</p>
 </div>
 </div>
 

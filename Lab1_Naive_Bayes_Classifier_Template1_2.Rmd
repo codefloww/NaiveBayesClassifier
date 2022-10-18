@@ -90,9 +90,7 @@ library(ggplot2)
 
 -   The first step is data pre-processing, which includes removing
     punctuation marks and stop words
-
--   represent each message as a bag-of-words
-
+    
 -   using the training set, calculate all the conditional probabilities
     in formula (1)
 
@@ -156,8 +154,8 @@ tidy_text <- tidy_text %>% filter(!splitted %in% splitted_stop_words)
 ```
 
 ```{r}
-X_test <- test[1:10,4]
-y_test <- test[1:10,3]
+X_test <- test[1:20,4]
+y_test <- test[1:20,3]
 
 ```
 
@@ -334,19 +332,20 @@ below.
 In conclusion, we can say that such classifier can be a very powerful
 tool for specific datasets. Why specific? Because as was examined
 throughout the writing of this lab work, the quality of data was proved
-to be very important. For instance, in the given dataset were many more
-neutral entries than discriminating ones, which shouldn't be a problem
-at first glance. But as seen in the probabilistic distributions, even
+to be very important. For instance, in the given dataset were much more
+neutral entries than discriminational, which shouldn't be a problem
+at first glance. But as was seen in the probabilistic distributions, even
 using Laplace smoothing words for the discriminating class were
 evaluated differently to those in the neutral class. Also, there was a
-big issue with the different kinds of stop words and mistakes in word
-coding. Those could be addressed by applying the lemmatization of words.
-The overall performance of the model for user input is quite good and
-can consistently show accurate classes.
+huge issue with the different kinds of stop words and mistakes in word
+encoding. Those could be addressed by cleaning up dataset and applying the 
+lemmantization of words. The overall performance of the model for user input 
+is quite good and can consistently show accurate classes.
 
 The most significant limitation for us came with the explicit use of R
 language, which doesn't provide such vectorization possibilities as C or
-C++. This is the main reason for such slow work of classification.
+C++ based solutions in python for example. This is the main reason for such slow
+evaluation of the model.
 Talking about the Naive Bayes model, it performed better than expected.
 Because of the Bayes theorem, which accounts a number of entries for
 each class, it still managed to get a pretty good approximation besides
